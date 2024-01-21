@@ -18,6 +18,9 @@ This repository contains a simple Express.js server for image uploading and retr
    ```bash
    git clone https://github.com/Babigdk/tobamsgroup.git
    cd tobamsgroup
+
+2. **cd backend**
+
 2. **Run**
    ```bash
    npm install
