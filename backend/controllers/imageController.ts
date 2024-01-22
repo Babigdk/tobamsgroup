@@ -26,7 +26,7 @@ export const uploadImage = async (req: Request, res: Response, next: NextFunctio
 
     res.json({ message: 'Image uploaded successfully', imageUrl: `/get_image/${image._id}` });
   } catch (err) {
-    next(err); // Pass the error to the error handling middleware
+    next(err);
   }
 };
 

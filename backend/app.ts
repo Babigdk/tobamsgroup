@@ -1,12 +1,13 @@
 import express, { Request, Response, NextFunction } from 'express';
 import mongoose, { ConnectOptions } from 'mongoose';
 import imageRoutes from './routes/imageRoutes';
+import { MulterError } from 'multer';
 
 const app = express();
 const port = 4000;
 
 // MongoDB setup
-mongoose.connect('mongodb://127.0.0.1:27017/img', {
+mongoose.connect('mongodb://127.0.0.1:27017/imgDB', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 } as ConnectOptions);
@@ -22,8 +23,12 @@ app.use(express.json());
 app.use('/api', imageRoutes);
 
 // Error handling middleware
-app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
-  res.status(500).json({ error: 'Internal server error' });
+app.use((err: Error | MulterError, req: Request, res: Response) => {
+  if (err instanceof MulterError) {
+    res.status(400).json({ error: err.message });
+  } else {
+    res.status(500).json({ error: 'Internal server error' });
+  }
 });
 
 app.listen(port, () => {
